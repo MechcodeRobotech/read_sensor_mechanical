@@ -1,13 +1,16 @@
 #include <Wire.h>
 #include <Adafruit_ADS1X15.h>
-#include "Max6675.h"
+#include "max6675.h"
 
 Adafruit_ADS1115 ads;
-Max6675 ts(13, 12, 14); // (so, cs, sck)
+int thermoDO = 13;
+int thermoCS = 12;
+int thermoCLK = 14;
+MAX6675 ts(thermoCLK, thermoCS, thermoDO); // (cs, so, sck)
 
 // --- ตัวแปรสำหรับ Multitasking ---
 unsigned long previousMillis = 0;  // เก็บเวลาล่าสุดที่อ่านอุณหภูมิ
-const long interval = 300;         // ระยะห่างในการอ่านอุณหภูมิ (300 ms)
+const long interval = 500;         // ระยะห่างในการอ่านอุณหภูมิ (300 ms)
 
 float currentTemp = 0.0;           // ตัวแปรเก็บค่าอุณหภูมิล่าสุดเอาไว้ส่ง
 
@@ -15,7 +18,7 @@ void setup(void) {
   Serial.begin(115200);
   ads.begin();
   ads.setDataRate(RATE_ADS1115_860SPS); // ตั้งให้ ADS อ่านไวที่สุดเท่าที่ทำได้
-  ts.setOffset(0);
+//  ts.setOffset(0);
 }
 
 void loop(void) {
@@ -43,7 +46,7 @@ void loop(void) {
     previousMillis = currentMillis;
 
     // อ่านค่าอุณหภูมิใหม่ แล้วอัปเดตลงตัวแปร currentTemp
-    currentTemp = ts.getCelsius();
+    currentTemp = ts.readCelsius();
   }
 
   // -------------------------------------------------
