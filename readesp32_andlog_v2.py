@@ -45,6 +45,9 @@ def read_serial_data():
                 
                 if not line:
                     continue
+                
+                #Print Serial ที่รับมา 
+                print(f"Serial Received: {line}")
 
                 data = line.split(',')
                 if len(data) == 4:
@@ -73,7 +76,7 @@ def log_temp_pressure():
     with open(FILE_TEMP_PRESS, mode='a', newline='') as file:
         writer = csv.writer(file)
         if not file_exists:
-            writer.writerow(["Timestamp", "Temp(C)", "Pressure(kPa)"])
+            writer.writerow(["Timestamp", "Temp(C)", "Pressure(Bar)"])
             
         while is_running:
             with data_lock:
