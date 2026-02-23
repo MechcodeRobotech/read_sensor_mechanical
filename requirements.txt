@@ -4,7 +4,8 @@ iso8601==2.1.0
 numpy==2.2.6
 pycparser==3.0
 PyYAML==6.0.3
-pyserial==0.0.97
+pyserial
 sounddevice==0.5.5
 soundfile==0.13.1
+
 
